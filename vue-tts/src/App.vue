@@ -1,5 +1,6 @@
 <template>
-  <div id="speech-container" class="bg-black">
+  <div id="speech-container" class="flex flex-col w400px  
+  h-screen min-w-360px bg-dark items-center">
     <Logo />
     <Speech />
   </div>
@@ -13,12 +14,6 @@ import Logo from '@/components/Logo.vue';
 
 <style scoped>
 #speech-container {
-  display: flex;
   margin: 0 auto;
-  width: 360px;
-  height: 100%;
-  min-width: 320px;
-  flex-direction: column;
-  align-items: center;
 }
 </style>
