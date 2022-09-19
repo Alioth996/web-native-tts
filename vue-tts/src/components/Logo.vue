@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1 class="text-center font-400 pt-6 logo-title">Vue-TTS</h1>
         <a href="https://vitejs.dev" target="_blank">
             <img src="/vite.svg" class="logo" alt="Vite logo" />
         </a>
