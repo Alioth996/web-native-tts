@@ -1,5 +1,5 @@
 <template>
-  <div id="speech-container">
+  <div id="speech-container" class="bg-black">
     <Logo />
     <Speech />
   </div>
