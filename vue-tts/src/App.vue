@@ -1,6 +1,8 @@
 <template>
-  <Logo />
-  <Speech msg="Vite + Vue" />
+  <div id="speech-container">
+    <Logo />
+    <Speech />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -10,17 +12,13 @@ import Logo from '@/components/Logo.vue';
 </script>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+#speech-container {
+  display: flex;
+  margin: 0 auto;
+  width: 360px;
+  height: 100%;
+  min-width: 320px;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
