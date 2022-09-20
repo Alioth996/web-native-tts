@@ -6,19 +6,26 @@
     <el-form-item>
       <div class="flex justify-center flex-col w300px items-center">
         <el-tag class="w50px">语速</el-tag>
-        <el-slider v-model="ttsForm.rate" :step="0.5" :min="0" :max="2" show-stops @change="handleSpeak(ttsFormRef)" />
+        <el-slider v-model="ttsForm.rate" :step="0.5" :min="0.5" :max="2" show-stops />
+      </div>
+    </el-form-item>
+
+    <el-form-item>
+      <div class="flex justify-center flex-col w300px items-center">
+        <el-tag class="w50px ">音高</el-tag>
+        <el-slider v-model="ttsForm.pitch" :step="0.1" :min="0" :max="2" />
       </div>
     </el-form-item>
 
     <el-form-item>
       <div class="flex justify-center flex-col w300px items-center">
         <el-tag class="w50px ">音量</el-tag>
-        <el-slider v-model="ttsForm.pitch" :step="1" :min="0" :max="100" @change="handleSpeak(ttsFormRef)" />
+        <el-slider v-model="ttsForm.volume" :step="0.1" :min="0" :max="1" />
       </div>
     </el-form-item>
 
     <el-form-item>
-      <el-select v-model="voicer" class="w300px" placeholder="选择语种" size="large">
+      <el-select v-model=" voicer" class="w300px" placeholder="选择语种" size="large">
         <el-option v-for="item in speakerList" :key="item.speaker" :label="item.label" :value="item.speaker" />
       </el-select>
     </el-form-item>
@@ -36,7 +43,8 @@ const ttsFormRef = ref()
 const ttsForm = reactive({
   rate: 1,
   text: '云深不知处',
-  pitch: 50
+  pitch: 1,
+  volume: 1
 })
 
 const ttsRules = reactive({
@@ -49,12 +57,6 @@ const ttsRules = reactive({
 const voicer = ref('Yunxi')
 // option列表
 let speakerList = reactive([])
-
-// // 改变语音参数
-// const ttsConfigChange = () => {
-//   console.log(1);
-//   handleSpeak()
-// }
 
 const handleSpeak = async (formEl) => {
   if (!formEl) return
@@ -120,7 +122,9 @@ const voiceSpeak = () => {
 
     speakUtt.pitch = ttsForm.pitch
     speakUtt.rate = ttsForm.rate
+    speakUtt.volume = ttsForm.volume
 
+    console.log(speakUtt);
     synth.speak(speakUtt)
 
     speakUtt.addEventListener('start', e => console.log('语音播放中...'))
