@@ -6,14 +6,14 @@
     <el-form-item>
       <div class="flex justify-center flex-col w300px items-center">
         <el-tag class="w50px">语速</el-tag>
-        <el-slider v-model="ttsForm.rate" :step="0.5" :min="0" :max="2" show-stops />
+        <el-slider v-model="ttsForm.rate" :step="0.5" :min="0" :max="2" show-stops @change="handleSpeak(ttsFormRef)" />
       </div>
     </el-form-item>
 
     <el-form-item>
       <div class="flex justify-center flex-col w300px items-center">
         <el-tag class="w50px ">音量</el-tag>
-        <el-slider v-model="ttsForm.pitch" :step="1" :min="0" :max="100" />
+        <el-slider v-model="ttsForm.pitch" :step="1" :min="0" :max="100" @change="handleSpeak(ttsFormRef)" />
       </div>
     </el-form-item>
 
@@ -23,7 +23,7 @@
       </el-select>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="handleSpeak(ttsFormRef)">Speak It!</el-button>
+      <el-button type="primary" class="w300px" @click="handleSpeak(ttsFormRef)">Speak It!</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -35,7 +35,7 @@ const ttsFormRef = ref()
 
 const ttsForm = reactive({
   rate: 1,
-  text: '',
+  text: '云深不知处',
   pitch: 50
 })
 
@@ -49,6 +49,12 @@ const ttsRules = reactive({
 const voicer = ref('Yunxi')
 // option列表
 let speakerList = reactive([])
+
+// // 改变语音参数
+// const ttsConfigChange = () => {
+//   console.log(1);
+//   handleSpeak()
+// }
 
 const handleSpeak = async (formEl) => {
   if (!formEl) return
