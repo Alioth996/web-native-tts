@@ -20,7 +20,7 @@
     <el-form-item>
       <div class="flex justify-center flex-col w300px items-center">
         <el-tag class="w50px ">音量</el-tag>
-        <el-slider v-model="ttsForm.volume" :step="0.1" :min="0" :max="1" />
+        <el-slider v-model="ttsForm.volume" :step="1" :min="0" :max="100" />
       </div>
     </el-form-item>
 
@@ -33,6 +33,9 @@
       <el-button type="primary" class="w300px" @click="handleSpeak(ttsFormRef)">Speak It!</el-button>
     </el-form-item>
   </el-form>
+
+  <!-- 语音播放的背景 -->
+  <div class="w-screen h-screen speak-bg-box" v-show="isSpeak"></div>
 </template>
 
 <script setup>
@@ -40,11 +43,13 @@ import { onMounted, reactive, ref } from 'vue'
 
 const ttsFormRef = ref()
 
+let isSpeak = ref(false)
+
 const ttsForm = reactive({
   rate: 1,
   text: '云深不知处',
   pitch: 1,
-  volume: 1
+  volume: 50
 })
 
 const ttsRules = reactive({
@@ -102,7 +107,7 @@ const initSynth = () => {
   }
 }
 
-// 播放语音
+// 播放语音队列
 const voiceSpeak = () => {
   const ttsTextList = [
     `我叫${voicer.value}`,
@@ -122,15 +127,30 @@ const voiceSpeak = () => {
 
     speakUtt.pitch = ttsForm.pitch
     speakUtt.rate = ttsForm.rate
-    speakUtt.volume = ttsForm.volume
+    speakUtt.volume = (ttsForm.volume / 100).toFixed(1)
 
-    console.log(speakUtt);
+
     synth.speak(speakUtt)
+    isSpeak.value = true
+
 
     speakUtt.addEventListener('start', e => console.log('语音播放中...'))
-    speakUtt.addEventListener('error', e => console.error('出错了!!', e))
-    speakUtt.addEventListener('end', e => console.log('语音播放结束!'))
+    speakUtt.addEventListener('error', e => {
+      console.error('出错了!!', e)
+    })
+
+    // 结束语音和背景动画
+    speakUtt.addEventListener('end', e => {
+      if (!synth.speaking) {
+        console.log('语音播放结束!')
+        isSpeak.value = false
+        return
+      }
+    })
+
   })
+
+
   // const ttsUttrance = new SpeechSynthesisUtterance(ttsForm.text)
 
   // // option 语音语种与 api绑定
@@ -157,3 +177,15 @@ const voiceSpeak = () => {
 
 const getVoiceName = ({ name }) => name.split(' ')[1]
 </script>
+
+<style scoped>
+.speak-bg-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -999;
+  background: url('@/assets/speak.gif') no-repeat center center/cover;
+}
+</style>

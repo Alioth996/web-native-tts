@@ -1,6 +1,6 @@
 <template>
   <div id="speech-container" class="flex flex-col w400px  
-  h-screen min-w-360px bg-dark items-center">
+  h-screen min-w-360px items-center">
     <Logo />
     <Speech />
   </div>
