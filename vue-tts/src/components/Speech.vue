@@ -35,7 +35,8 @@
   </el-form>
 
   <!-- 语音播放的背景 -->
-  <div class="w-screen h-screen speak-bg-box" v-show="isSpeak"></div>
+  <div class="speak-bg-box m-b" v-show="isSpeak">
+  </div>
 </template>
 
 <script setup>
@@ -180,12 +181,10 @@ const getVoiceName = ({ name }) => name.split(' ')[1]
 
 <style scoped>
 .speak-bg-box {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -999;
-  background: url('@/assets/speak.gif') no-repeat center center/cover;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 7px;
+  background: url(/src/assets/speak.gif) no-repeat -293px -104px;
 }
 </style>
