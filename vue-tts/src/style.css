@@ -27,7 +27,7 @@ body,
   height: 100vh;
   overflow: hidden;
 }
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
